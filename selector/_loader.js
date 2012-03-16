@@ -1,5 +1,5 @@
 define(["../has", "require"],
-		function(has, require){
+		function(has, require, lite){
 // summary:
 //		This module handles loading the appropriate selector engine for the given browser
 "use strict";
@@ -20,8 +20,14 @@ if(typeof(document) != 'undefined') {
 var fullEngine;
 var acme = "./acme", lite = "./lite";
 return {
-	load: function(id, parentRequire, loaded, config){
-		var req = require;
+	load: function(name, req, load, config){
+	
+		req(['dojo/selector/lite'], function (value) {
+			 load(value);
+		});
+	
+		//loaded(require(["dojo/selector/lite"]));
+		/*var req = require;
 		// here we implement the default logic for choosing a selector engine
 		id = id == "default" ? has("config-selectorEngine") || "css3" : id;
 		id = id == "css2" || id == "lite" ? lite :
@@ -42,7 +48,7 @@ return {
 				fullEngine = engine;
 			}
 			loaded(engine);
-		});
+		});*/
 	}
 };
 });
